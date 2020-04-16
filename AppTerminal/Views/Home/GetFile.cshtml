@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Главная";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 0;
+}
+
+
+<div id="file" class="file">
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    @if (ViewBag.listFile != null)
+    {
+        <ul>
+
+            @foreach (var file in ViewBag.listFile)
+            {
+                <li>
+                    <a style="font-size:18pt; color:#ff0000" href=@file target="_blank" type="application/pdf">@ViewBag.listFileName[i]</a>
+                    <br />
+                    <br />
+                    <br />
+
+                </li>
+                i++;
+
+
+            }
+        </ul>
+    }
+</div>
