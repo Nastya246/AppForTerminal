@@ -16,16 +16,36 @@ namespace AppTerminal.Controllers
 
         public ActionResult GetFile(string id)
         {
-            var countFile = new DirectoryInfo(@"D:\terminal\AppTerminal\AppTerminal\Content\" + id).GetFiles().Count();
+            var path = "";
+            var countFile = new DirectoryInfo(@"D:\AppForTerminal\AppTerminal\AppTerminal\Content\" + id).GetFiles().Count();
             var listFile = new List<string>();
             var listFileName = new List<string>();
-            var getFile = new DirectoryInfo(@"D:\terminal\AppTerminal\AppTerminal\Content\" + id).GetFiles();
+            var flagPath = false;
+            var getFile = new DirectoryInfo(@"D:\AppForTerminal\AppTerminal\AppTerminal\Content\" + id).GetFiles();
             //   Response.AppendHeader("Content-Disposition", "inline; filename=" + getFile[0].ToString() + ";");
             foreach (var file in getFile)
             {
-                string path = file.FullName.Substring(35);
+                string[] stringTempList = (file.FullName).Split('\\');
+                var resulttemp = stringTempList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                stringTempList = resulttemp;
+                foreach(var str in stringTempList)
+                {
+                    if (flagPath)
+                    {
+                        path += "\\"+str;
+                    }
+                    if (str=="Content")
+                    {
+                        path += "\\" + str;
+                        flagPath = true;
+                    }
+                }
+               
+              //  string path = file.FullName.Substring(41);
                 listFile.Add(path);
                 listFileName.Add(file.ToString());
+                flagPath = false;
+                path = "";
             };
             ViewBag.listFile = listFile;
             ViewBag.listFileName = listFileName;
